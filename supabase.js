@@ -5,3 +5,4 @@ let supabaseKEY='sb_publishable_Hdwc0PpEAZsPhTfUFoJgLA_vjbAztGL'
 const supabase = createClient(supabaseURL,supabaseKEY)
 
 export default supabase
+
