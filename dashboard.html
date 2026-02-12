@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Advanced Todo App</title>
+
+<style>
+
+body{
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#4e73df,#1cc88a);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container{
+  background: white;
+  width: 400px;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+h2{
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.input-section{
+  display: flex;
+  gap: 8px;
+}
+
+input{
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+button{
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-btn{
+  background: #4e73df;
+  color: white;
+}
+
+ul{
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+li{
+  background: #f8f9fc;
+  margin-bottom: 10px;
+  padding: 8px;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.completed{
+  text-decoration: line-through;
+  color: gray;
+}
+
+.actions button{
+  margin-left: 5px;
+}
+
+.edit{
+  background: orange;
+  color: white;
+}
+
+.delete{
+  background: red;
+  color: white;
+}
+
+.done{
+  background: green;
+  color: white;
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<h2>Todo App</h2>
+
+<div class="input-section">
+  <input type="text" id="taskInput" placeholder="Enter task...">
+  <button class="add-btn" onclick="addTask()">Add</button>
+</div>
+
+<ul id="taskList"></ul>
+
+</div>
+
+<script>
+
+let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+function saveTasks(){
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function renderTasks(){
+  let list = document.getElementById("taskList");
+  list.innerHTML = "";
+
+  tasks.forEach((task, index) => {
+
+    let li = document.createElement("li");
+    li.className = task.completed ? "completed" : "";
+
+    li.innerHTML = `
+      <span>${task.text}</span>
+      <div class="actions">
+        <button class="done" onclick="toggleComplete(${index})">✓</button>
+        <button class="edit" onclick="editTask(${index})">Edit</button>
+        <button class="delete" onclick="deleteTask(${index})">Delete</button>
+      </div>
+    `;
+
+    list.appendChild(li);
+
+  });
+}
+
+function addTask(){
+
+  let input = document.getElementById("taskInput");
+  let text = input.value.trim();
+
+  if(text === ""){
+    alert("Please enter a task");
+    return;
+  }
+
+  tasks.push({
+    text: text,
+    completed: false
+  });
+
+  input.value = "";
+  saveTasks();
+  renderTasks();
+}
+
+function deleteTask(index){
+  tasks.splice(index,1);
+  saveTasks();
+  renderTasks();
+}
+
+function editTask(index){
+  let newText = prompt("Edit your task:", tasks[index].text);
+  if(newText !== null && newText.trim() !== ""){
+    tasks[index].text = newText;
+    saveTasks();
+    renderTasks();
+  }
+}
+
+function toggleComplete(index){
+  tasks[index].completed = !tasks[index].completed;
+  saveTasks();
+  renderTasks();
+}
+
+renderTasks();
+
+</script>
+
+</body>
+</html>

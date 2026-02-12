@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo app</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            padding: 0;
+        }
+
+        .section {
+            display: none;
+            height: 100vh;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .active {
+            display: flex;
+        }
+
+        /* Splash */
+        #splash {
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            color: white;
+            font-size: 30px;
+        }
+
+        /* h1 {
+            color: coral;
+            font-weight: bolder;
+            font-size: 10rem;
+        } */
+    </style>
+</head>
+
+<body>
+    <div id="splash" class="section active">
+  <h1>Welcome to My App</h1>
+</div>
+
+    <script>
+        setTimeout(() => {
+            window.location.href = "login.html";
+        }, 2000);
+    </script>
+
+</body>
+
+</html>
